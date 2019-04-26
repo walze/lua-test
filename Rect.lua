@@ -32,6 +32,19 @@ function Rect:new(x, y, w, h, col, row, grid)
         return rect._siblings
     end
 
+    function rect:aliveN()
+        sib = rect:siblings()
+        c = 0
+
+        for _, neighbour in pairs(sib) do
+            if neighbour.active then
+                c = c + 1
+            end
+        end
+
+        return c
+    end
+
     function rect:draw()
         if not self.active then
             return

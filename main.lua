@@ -7,7 +7,7 @@ end
 function love.load()
     grid = {}
     grid.spacing = 1
-    grid.resolution = 4
+    grid.resolution = 100
     grid.w = love.graphics.getWidth()
     grid.h = love.graphics.getHeight()
     grid.rowSize = grid.w / grid.resolution
@@ -44,9 +44,10 @@ function love.update(dt)
 
     for y, row in ipairs(grid) do
         for x, rect in ipairs(row) do
-            
-         
+            aliveN = rect.aliveN()
 
+
+            print(aliveN)
         end
     end
 end
@@ -70,15 +71,25 @@ function getClick(x, max)
     end
 end
 
-function love.mousepressed( x, y, button )
+function love.mousereleased()
+    pressed = false
+end
+
+function love.mousepressed()
+    pressed = true
+end
+
+function love.mousemoved( x, y, button )
+    if not pressed then return end
+
     row = getClick(x, grid.rowSize)
     col = getClick(y, grid.colSize)
 
     rect = grid[col][row]
 
-    if button == 1 then 
-        rect.active = not rect.active
+    if button == 1 then
+        rect.active = true
     else
-        rect.siblings().top.active = not rect.siblings().top.active
+        rect.active = false
     end
 end
