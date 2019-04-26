@@ -12,6 +12,7 @@ function love.load()
     grid.h = love.graphics.getHeight()
     grid.rowSize = grid.w / grid.resolution
     grid.colSize = grid.h / grid.resolution
+    delta = 0
 
     for col = 1, grid.resolution do
         grid[col] = {}
@@ -40,9 +41,7 @@ end
 
 
 function love.update(dt)
-    love.graphics.print(dt)
-    
-    delta = 1 + dt
+    delta = dt
 
     for col = 1, grid.resolution do
         for row = 1, grid.resolution do
@@ -66,6 +65,7 @@ end
 
 
 function love.draw()
+    love.graphics.print(delta * 1000)
 
     for y, row in ipairs(grid) do
         for x, rect in ipairs(row) do
