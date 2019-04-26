@@ -11,7 +11,7 @@ end
 function love.load()
     grid = {}
     grid.spacing = 1
-    grid.resolution = 50
+    grid.resolution = 300
     grid.w = love.graphics.getWidth()
     grid.h = love.graphics.getHeight()
     grid.rowSize = grid.w / grid.resolution
