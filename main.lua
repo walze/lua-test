@@ -5,47 +5,56 @@ function love.resize(nw, nh)
 end
 
 function love.load()
-    w = love.graphics.getWidth()
-    h = love.graphics.getHeight()
-
-    resolution = 100
-    spacing = 1
-
     grid = {}
+    grid.spacing = 1
+    grid.resolution = 4
+    grid.w = love.graphics.getWidth()
+    grid.h = love.graphics.getHeight()
+    grid.rows = grid.w / grid.resolution
+    grid.cols = grid.h / grid.resolution
 
-    for y = 1, resolution do
-        grid[y] = {}
-        for x = 1, resolution do
-            rx = (x - 1) * (w / resolution) + (spacing / 2)
-            ry = (y - 1) * (h / resolution) + (spacing / 2)
-            rw = w / resolution - spacing
-            rh = h / resolution - spacing
+    for col = 1, grid.resolution do
+        grid[col] = {}
+        for row = 1, grid.resolution do
+            rx = (row - 1) * grid.rows + (grid.spacing / 2)
+            ry = (col - 1) * grid.cols + (grid.spacing / 2)
+            rw = grid.w / grid.resolution - grid.spacing
+            rh = grid.h / grid.resolution - grid.spacing
 
-            grid[y][x] = Rect:new(
+            rect = Rect:new(
                 rx,
                 ry,
                 rw,
-                rh
+                rh,
+                col,
+                row,
+                grid
             )
 
-            rect = grid[y][x]
+            if math.random(10) <= 5 then
+                rect.active = false
+            end
+
+            grid[col][row] = rect
         end
     end
 
+    print(grid[2][1]:sibling(1, -3))
 end
 
 
 function love.update(dt)
     delta = 1 + dt
 
-    for y, row in pairs(grid) do
-        for x, rect in pairs(row) do
-            randX = math.random(3, -3)
-            randY = math.random(2, -2)
-            x = rect.x + randX * delta
-            y = rect.y + randY * delta
+    for y, row in ipairs(grid) do
+        for x, rect in ipairs(row) do
+            
+            if math.random(10) <= 5 then
+                rect.active = false
+            else
+                rect.active = true
+            end
 
-            rect:set(x)
         end
     end
 end
@@ -53,8 +62,8 @@ end
 
 function love.draw()
 
-    for y, row in pairs(grid) do
-        for x, rect in pairs(row) do
+    for y, row in ipairs(grid) do
+        for x, rect in ipairs(row) do
             rect:draw()
         end
     end
