@@ -1,7 +1,9 @@
 Rect = require("Rect")
 
-function love.keypressed()
-    love.load()
+function love.keypressed(key)
+    if key == "z" then
+        love.load()
+    end
 end
 
 function love.resize(nw, nh)
