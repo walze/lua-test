@@ -14,7 +14,16 @@ function Rect:new(x, y, w, h, col, row, grid)
     rect.row = row or nil
     rect.active = true
     rect.siblings = {
-        
+        top_left = function() return rect:sibling(-1, -1) end,
+        top = function() return rect:sibling(0, -1) end,
+        top_right = function() return rect:sibling(1, -1) end,
+
+        left = function() return rect:sibling(-1, 0) end,
+        right = function() return rect:sibling(1, 0) end,
+
+        bottom_left = function() return rect:sibling(-1, 1) end,
+        bottom = function() return rect:sibling(0, 1) end,
+        bottom_right = function() return rect:sibling(1, 1) end,
     }
 
     function rect:draw()
@@ -30,8 +39,11 @@ function Rect:new(x, y, w, h, col, row, grid)
     end
 
     function rect:sibling(diffX, diffY)
-        col = (((self.col - 1) + diffX + grid.resolution) % grid.resolution) + 1
-        row = (((self.row - 1) + diffY + grid.resolution) % grid.resolution) + 1
+        x = diffX or 0
+        y = diffY or 0
+
+        col = (((self.col - 1) + x + grid.resolution) % grid.resolution) + 1
+        row = (((self.row - 1) + y + grid.resolution) % grid.resolution) + 1
 
         return self.grid[col][row]
     end
