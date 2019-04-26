@@ -5,7 +5,7 @@
     "_runner": "terminal",
     "tasks": [
         {
-            "label": "Run Node",
+            "label": "love",
             "type": "process",
             "windows": {
                 "command": "C:\\Program Files\\LOVE\\love.exe"
@@ -13,7 +13,13 @@
             "osx": {
                 "command": "/Applications/love.app/Contents/MacOS/love"
             },
-            "args": ["."]
+            "args": [
+                "."
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

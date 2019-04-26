@@ -3,43 +3,50 @@ Rect = require("Rect")
 function love.load()
     w = love.graphics.getWidth()
     h = love.graphics.getHeight()
-    resolution = 2
-    spacing = 2
+    resolution = 100
+    spacing = 5
 
     grid = {}
     
-    for y = 0, resolution do
+    for y = 1, resolution do
         grid[y] = {}
-        for x = 0, resolution do
-            rx = x * (w / resolution) + (spacing / 2)
-            ry = y * (h / resolution) + (spacing / 2)
+        for x = 1, resolution do
+            rx = (x - 1) * (w / resolution) + (spacing / 2)
+            ry = (y - 1) * (h / resolution) + (spacing / 2)
             rw = w / resolution - spacing
             rh = h / resolution - spacing
 
-            print(rx, ry, rw, rh)
-
-            grid[y][x] = Rect(
+            grid[y][x] = Rect:new(
                 rx,
                 ry,
                 rw,
                 rh 
             )
+            
+            rect = grid[y][x] 
+            print(rect.x, rect.y)
         end
+        print("\n")
     end
 
 end
 
 function love.update(dt)
+    for y, row in pairs(grid) do
+        for x, rect in pairs(row) do
+            randX = math.random(2, -2)
+
+            rect:set(rect.x + randX)
+        end
+    end
 end
 
 function love.draw()
 
-    r1 = Rect(100,200,100,100)
-    r1.draw()
 
-    for _, row in pairs(grid) do
-        for _, rect in pairs(row) do
-            print(rect)
+    for y, row in pairs(grid) do
+        for x, rect in pairs(row) do
+            rect:draw()
         end
     end
 

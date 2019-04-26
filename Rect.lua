@@ -1,23 +1,31 @@
 local Rect = {}
 
-Rect.x = 0
-Rect.y = 0
-Rect.width = 0
-Rect.height = 0
+function Rect:new(x, y, width, height)
+    rect = {}
 
-function Rect.draw()
-    love.graphics.rectangle('fill', Rect.x, Rect.y, Rect.width, Rect.height)
+    rect.x =  x or nil
+    rect.y =  y or nil
+    rect.width = width or nil
+    rect.height = height or nil
+
+    function rect:draw()
+        love.graphics.rectangle(
+            'fill', 
+            self.x, 
+            self.y, 
+            self.width, 
+            self.height
+        )
+    end
+
+    function rect:set(x, y, width, height)
+        self.x =  x or self.x
+        self.y =  y or self.y
+        self.width = width or self.width
+        self.height = height or self.height
+    end
+
+    return rect
 end
 
-function Rect.set(x, y, width, height)
-    Rect.x = x and x or Rect.x
-    Rect.y = y and y or Rect.y
-    Rect.width = width and width or Rect.width
-    Rect.height = height and height or Rect.height
-end
-
-return function(x, y, width, height)
-    Rect.set(x, y, width, height)
-
-    return Rect
-end
+return Rect
