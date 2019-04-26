@@ -10,14 +10,14 @@ function love.load()
     grid.resolution = 4
     grid.w = love.graphics.getWidth()
     grid.h = love.graphics.getHeight()
-    grid.rows = grid.w / grid.resolution
-    grid.cols = grid.h / grid.resolution
+    grid.rowSize = grid.w / grid.resolution
+    grid.colSize = grid.h / grid.resolution
 
     for col = 1, grid.resolution do
         grid[col] = {}
         for row = 1, grid.resolution do
-            rx = (row - 1) * grid.rows + (grid.spacing / 2)
-            ry = (col - 1) * grid.cols + (grid.spacing / 2)
+            rx = (row - 1) * grid.rowSize + (grid.spacing / 2)
+            ry = (col - 1) * grid.colSize + (grid.spacing / 2)
             rw = grid.w / grid.resolution - grid.spacing
             rh = grid.h / grid.resolution - grid.spacing
 
@@ -31,15 +31,11 @@ function love.load()
                 grid
             )
 
-            if math.random(10) <= 5 then
-                rect.active = false
-            end
-
             grid[col][row] = rect
         end
     end
 
-    print(grid[2][1]:sibling(1, -3))
+    
 end
 
 
@@ -49,11 +45,7 @@ function love.update(dt)
     for y, row in ipairs(grid) do
         for x, rect in ipairs(row) do
             
-            if math.random(10) <= 5 then
-                rect.active = false
-            else
-                rect.active = true
-            end
+         
 
         end
     end
@@ -68,4 +60,25 @@ function love.draw()
         end
     end
 
+end
+
+function getClick(x, max)
+    for i = 1, grid.resolution do
+        match = x >= max * (i - 1) and x < max * i
+
+        if match then return i end
+    end
+end
+
+function love.mousepressed( x, y, button )
+    row = getClick(x, grid.rowSize)
+    col = getClick(y, grid.colSize)
+
+    rect = grid[col][row]
+
+    if button == 1 then 
+        rect.active = not rect.active
+    else
+        rect.siblings().top.active = not rect.siblings().top.active
+    end
 end
