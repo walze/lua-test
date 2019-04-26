@@ -1,10 +1,21 @@
 Rect = require("Rect")
 
+function love.resize(nw, nh)
+    love.load()
+end
+
 function love.load()
+    print(
+        Utils.hex2rgb("#ffffff")[0]
+    )
+
     w = love.graphics.getWidth()
     h = love.graphics.getHeight()
+
+    print(w,h)
+
     resolution = 100
-    spacing = 5
+    spacing = 1
 
     grid = {}
     
@@ -24,25 +35,29 @@ function love.load()
             )
             
             rect = grid[y][x] 
-            print(rect.x, rect.y)
         end
-        print("\n")
     end
 
 end
+
 
 function love.update(dt)
+    delta = 1 + dt
+
     for y, row in pairs(grid) do
         for x, rect in pairs(row) do
-            randX = math.random(2, -2)
+            randX = math.random(3, -3)
+            randY = math.random(2, -2)
+            x = rect.x + randX * delta
+            y = rect.y + randY * delta
 
-            rect:set(rect.x + randX)
+            rect:set(x)
         end
     end
 end
 
-function love.draw()
 
+function love.draw()
 
     for y, row in pairs(grid) do
         for x, rect in pairs(row) do
