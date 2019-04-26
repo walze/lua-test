@@ -1,5 +1,9 @@
 Rect = require("Rect")
 
+function love.keypressed()
+    love.load()
+end
+
 function love.resize(nw, nh)
     love.load()
 end
