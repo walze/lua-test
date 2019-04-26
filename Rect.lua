@@ -12,7 +12,7 @@ function Rect:new(x, y, w, h, col, row, grid)
     rect.h = h or nil
     rect.col = col or nil
     rect.row = row or nil
-    rect.active = true
+    rect.active = false
 
     rect._siblings = nil
     rect.siblings = function()
