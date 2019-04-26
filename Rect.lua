@@ -9,10 +9,10 @@ function Rect:new(x, y, width, height, color)
     rect.y =  y or nil
     rect.width = width or nil
     rect.height = height or nil
-    rect.color = color or (1)
+    rect.color = color and Utils.hex2rgb(color) or {1, 1, 1, 1}
 
     function rect:draw()
-        love.graphics.setColor(self.color, self.color,self.color,1)
+        love.graphics.setColor(self.color[1], self.color[2], self.color[3], 1)
         love.graphics.rectangle(
             'fill', 
             self.x, 

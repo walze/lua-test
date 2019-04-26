@@ -5,20 +5,14 @@ function love.resize(nw, nh)
 end
 
 function love.load()
-    print(
-        Utils.hex2rgb("#ffffff")[0]
-    )
-
     w = love.graphics.getWidth()
     h = love.graphics.getHeight()
-
-    print(w,h)
 
     resolution = 100
     spacing = 1
 
     grid = {}
-    
+
     for y = 1, resolution do
         grid[y] = {}
         for x = 1, resolution do
@@ -31,10 +25,10 @@ function love.load()
                 rx,
                 ry,
                 rw,
-                rh 
+                rh
             )
-            
-            rect = grid[y][x] 
+
+            rect = grid[y][x]
         end
     end
 
