@@ -7,7 +7,7 @@ end
 function love.load()
     grid = {}
     grid.spacing = 1
-    grid.resolution = 50
+    grid.resolution = 300
     grid.w = love.graphics.getWidth()
     grid.h = love.graphics.getHeight()
     grid.rowSize = grid.w / grid.resolution
@@ -31,10 +31,6 @@ function love.load()
                 grid
             )
 
-            if math.random(10) <= 5 then
-                rect.active = true
-            end
-
             grid[col][row] = rect
         end
     end
@@ -44,10 +40,13 @@ end
 
 
 function love.update(dt)
+    love.graphics.print(dt)
+    
     delta = 1 + dt
 
-    for y, row in ipairs(grid) do
-        for x, rect in ipairs(row) do
+    for col = 1, grid.resolution do
+        for row = 1, grid.resolution do
+            rect = grid[col][row]
             aliveCell = rect.active
             aliveNeighbours = rect.aliveN()
 
@@ -101,10 +100,11 @@ function love.mousemoved( x, y )
 
     rect = grid[col][row]
 
-    print("alive neighbours", rect:aliveN())
-
     if button == 1 then
         rect.active = true
+        for _, neighbour in pairs(rect.siblings()) do
+            neighbour.active = true
+        end
     else
         rect.active = false
     end
